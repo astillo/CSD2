@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,6 +39,34 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+user = Player(input('What is your name?'), room['outside'])
+
+hasQuit = False
+
+welcome_text = f"""Welcome to BattleInfinity {user.playerName}!!\n Using NSEW keys please indicate the direction youd like to move \n"""
+
+print(welcome_text)
+
+is_loser = False
+
+while not is_loser:
+    current_room = user.room
+    print(f'{current_room.room_name}: {current_room.description} \n')
+    user_direction = input('Please select a way to move').upper()
+
+    room_directions = {
+        'N': current_room.n_to,
+        'S': current_room.s_to,
+        'E': current_room.e_to,
+        'W': current_room.w_to
+    }
+
+    if user_direction == 'Q':
+        is_loser = True
+        print(f'It has been a pleasure {user.playerName}')
+
+    elif user_direction == 'N' or user_direction == 'S' or user_direction == 'E' or user_direction == 'W':
+        user.move(room_directions[user_direction])
 
 # Write a loop that:
 #
